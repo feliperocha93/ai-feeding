@@ -1,7 +1,7 @@
 import { createCustomers, createPurchases } from "./create_data.js";
 import { createTables } from "./create_tables.js";
 import { insertCustomers, insertPurchases } from "./insert_data.js";
-import { pool } from "./db.js";
+import { pool } from "../db.js";
 
 createTables(pool)
   .then(() => {
