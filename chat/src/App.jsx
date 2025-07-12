@@ -12,7 +12,7 @@ function App() {
 
   async function submitPrompt(userPrompt) {
     setCanSendNewMessage(false);
-    if (messages.length == 0) {
+    if (messages.length === 0) {
       setConversationStarted(true);
     }
 

@@ -21,13 +21,13 @@ const systemInstruction = (customer, customerPurchases) => `
   </CUSTOMER_INSTRUCTIONS>
 `;
 
-const getResponse = async (customerInfo, question) => {
+const getResponse = async (customerInfo, history) => {
   const response = await genai.models.generateContent({
     model: "gemini-2.0-flash",
     config: {
       systemInstruction: systemInstruction(customerInfo.customer, customerInfo.customerPurchases),
     },
-    contents: question,
+    contents: history,
   });
 
   return response.candidates[0].content.parts[0].text;

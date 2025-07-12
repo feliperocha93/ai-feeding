@@ -5,8 +5,10 @@ export default async function getResponse(prompt) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      email: "Silas_Silva@bol.com.br",
+      email: "Ricardo_Franco28@gmail.com",
       message: prompt
     })
-  }).then(r => r.json).then(o => o.response);
+  })
+    .then((r) => r.json())
+    .then((o) => o.response);
 }

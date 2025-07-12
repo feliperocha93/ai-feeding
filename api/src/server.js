@@ -4,6 +4,7 @@ import express from "express";
 import { getResponse } from "./ai/services.js";
 import { pool } from "./db/client.js";
 import { getCustomerInfo } from "./db/services.js";
+import history from "./history.js";
 
 const app = express();
 
@@ -16,9 +17,13 @@ app.get("/", (_, res) => {
 
 app.post("/support", async (req, res) => {
   const { email, message } = req.body;
+  history.add(email, "user", message);
+
   const customerInfo = await getCustomerInfo(pool, email);
-  const response = await getResponse(customerInfo, message);
-  res.send(response);
+  const response = await getResponse(customerInfo, history.get(email));
+  history.add(email, "model", response);
+
+  res.send({ response });
 });
 
 app.listen(3000, () => {
