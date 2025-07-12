@@ -3,12 +3,14 @@ import "./App.css";
 import UserPromptInput from "./components/UserPromptInput/UserPromptInput";
 import Chat from "./components/Chat/Chat";
 import getResponse from "./ai_api";
+import LoginBox from "./components/LoginBox/LoginBox";
 
 function App() {
   const [conversationStarted, setConversationStarted] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isThinking, setIsThinking] = useState(false);
   const [canSendNewMessage, setCanSendNewMessage] = useState(true);
+  const [email, setEmail] = useState(null);
 
   async function submitPrompt(userPrompt) {
     setCanSendNewMessage(false);
@@ -19,7 +21,7 @@ function App() {
     setMessages((prevMessages) => [...prevMessages, { type: "user", text: userPrompt }]);
     setIsThinking(true);
 
-    const aiResponse = await getResponse(userPrompt);
+    const aiResponse = await getResponse(email, userPrompt);
 
     setIsThinking(false);
     setMessages((prevMessages) => [...prevMessages, { type: "ai", text: aiResponse }]);
@@ -27,16 +29,22 @@ function App() {
 
   return (
     <>
-      <Chat
-        messages={messages}
-        isThinking={isThinking}
-        setCanSendNewMessage={setCanSendNewMessage}
-      />
-      <UserPromptInput
-        onSubmit={submitPrompt}
-        canSubmit={canSendNewMessage}
-        conversationStarted={conversationStarted}
-      />
+      {email ? (
+        <>
+          <Chat
+            messages={messages}
+            isThinking={isThinking}
+            setCanSendNewMessage={setCanSendNewMessage}
+          />
+          <UserPromptInput
+          onSubmit={submitPrompt}
+          canSubmit={canSendNewMessage}
+          conversationStarted={conversationStarted}
+          />
+        </>
+      ) : (
+        <LoginBox login={setEmail} />
+      )}
     </>
   );
 }

@@ -1,11 +1,11 @@
-export default async function getResponse(prompt) {
+export default async function getResponse(email, prompt) {
   return fetch("http://localhost:3000/support", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      email: "Ricardo_Franco28@gmail.com",
+      email,
       message: prompt
     })
   })
