@@ -10,14 +10,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("Hello World");
 });
 
-app.post("/message", async (req, res) => {
-  const customerInfo = await getCustomerInfo(pool, req.query.email);
-  console.log(req.body);
-  const response = await getResponse(customerInfo, req.body.question);
+app.post("/support", async (req, res) => {
+  const { email, message } = req.body;
+  const customerInfo = await getCustomerInfo(pool, email);
+  const response = await getResponse(customerInfo, message);
   res.send(response);
 });
 
