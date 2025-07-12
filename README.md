@@ -21,5 +21,5 @@ node data/main.js # create tables, generate data and insert into db
 
 ### Running
 ```sh
-pnpm start
+pnpm dev
 ```
